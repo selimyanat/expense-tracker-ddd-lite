@@ -9,43 +9,205 @@
   <packaging>pom</packaging>
   <version>1.0.0-SNAPSHOT</version>
   <modules>
-    <module>domain</module>
+    <module>identity</module>
     <module>shared-kernel</module>
   </modules>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>11</java.version>
+    <!-- Dependencies version -->
+    <spring.boot.version>2.1.9.RELEASE</spring.boot.version>
+    <google.guava.version>28.0-jre</google.guava.version>
+    <commons.lang3.version>3.9</commons.lang3.version>
+    <commons.validator.version>1.6</commons.validator.version>
+    <lombok.version>1.18.8</lombok.version>
+    <vavr.version>0.10.2</vavr.version>
+    <!-- Test Dependencies version -->
+    <groovy.version>2.5.6</groovy.version>
+    <spock.version>1.3-groovy-2.5</spock.version>
+    <h2.version>1.4.200</h2.version>
+    <!-- Plugin version -->
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <maven.surfire.version>2.22.1</maven.surfire.version>
+    <maven.failsafe.version>2.22.1</maven.failsafe.version>
+    <codehaus.gmaven.version>1.8.0</codehaus.gmaven.version>
+    <codehaus.buildhelper.version>3.0.0</codehaus.buildhelper.version>
+  </properties>
+
   <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+      <version>${spring.boot.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jdbc</artifactId>
+      <version>${spring.boot.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.9</version>
+      <version>${commons.lang3.version}</version>
     </dependency>
     <dependency>
       <groupId>commons-validator</groupId>
       <artifactId>commons-validator</artifactId>
-      <version>1.6</version>
+      <version>${commons.validator.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>28.0-jre</version>
+      <version>${google.guava.version}</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.8</version>
+      <version>${lombok.version}</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.vavr</groupId>
+      <artifactId>vavr</artifactId>
+      <version>${vavr.version}</version>
+    </dependency>
+      <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>${h2.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+    <!-- Test Dependencies -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <version>${spring.boot.version}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy</artifactId>
-      <version>2.5.6</version>
+      <version>${groovy.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.spockframework</groupId>
       <artifactId>spock-core</artifactId>
-      <version>1.3-groovy-2.5</version>
+      <version>${spock.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring.boot.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>${maven.compiler.source}</source>
+            <target>${maven.compiler.target}</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.gmavenplus</groupId>
+          <artifactId>gmavenplus-plugin</artifactId>
+          <version>${codehaus.gmaven.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>compileTests</goal>
+                <goal>addTestSources</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <testSources>
+              <testSource>
+                <directory>src/test/groovy</directory>
+                <includes>
+                  <include>**/*.groovy</include>
+                </includes>
+              </testSource>
+            </testSources>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>${codehaus.buildhelper.version}</version>
+          <executions>
+            <execution>
+              <id>add-integration-test-source</id>
+              <phase>generate-test-sources</phase>
+              <goals>
+                <goal>add-test-source</goal>
+              </goals>
+              <configuration>
+                <sources>
+                  <source>src/integration-test/java</source>
+                </sources>
+              </configuration>
+            </execution>
+            <execution>
+              <id>add-resource</id>
+              <phase>generate-resources</phase>
+              <goals>
+                <goal>add-resource</goal>
+              </goals>
+              <configuration>
+                <resources>
+                  <resource>
+                    <directory>src/integration-test/resources</directory>
+                    <targetPath>resources</targetPath>
+                  </resource>
+                </resources>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven.surfire.version}</version>
+          <configuration>
+            <useFile>false</useFile>
+            <includes>
+              <include>**/*Spec.java</include>
+            </includes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>${maven.failsafe.version}</version>
+          <executions>
+            <execution>
+              <id>integration-tests</id>
+              <phase>integration-test</phase>
+              <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <testSourceDirectory>src/integration-test/java</testSourceDirectory>
+            <includes>
+              <include>**/*IT.java</include>
+            </includes>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
 </project>
