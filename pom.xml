@@ -1,105 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.sy.expense.tracker</groupId>
   <artifactId>expense-tracker</artifactId>
   <packaging>pom</packaging>
   <version>1.0.0-SNAPSHOT</version>
+
   <modules>
-    <module>identity</module>
     <module>shared-kernel</module>
+    <module>identity</module>
+    <module>identity-event</module>
+    <module>expense</module>
+    <module>server</module>
+    <module>expense-event</module>
+    <module>audit</module>
   </modules>
 
   <properties>
+    <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>11</java.version>
     <!-- Dependencies version -->
     <spring.boot.version>2.1.9.RELEASE</spring.boot.version>
+    <commons.validator.version>1.6</commons.validator.version>
+    <fatboyindustrial.gson.javatime.version>1.1.1</fatboyindustrial.gson.javatime.version>
+    <google.gson.version>2.8.6</google.gson.version>
     <google.guava.version>28.0-jre</google.guava.version>
     <commons.lang3.version>3.9</commons.lang3.version>
-    <commons.validator.version>1.6</commons.validator.version>
+    <groovy.version>2.5.6</groovy.version>
+    <h2.version>1.4.200</h2.version>
+    <jackson.databind.version>2.9.8</jackson.databind.version>
     <lombok.version>1.18.8</lombok.version>
     <vavr.version>0.10.2</vavr.version>
+    <swagger.version>2.9.2</swagger.version>
     <!-- Test Dependencies version -->
-    <groovy.version>2.5.6</groovy.version>
+    <spring.security.test.version>5.3.1.RELEASE</spring.security.test.version>
     <spock.version>1.3-groovy-2.5</spock.version>
-    <h2.version>1.4.200</h2.version>
     <!-- Plugin version -->
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
-    <maven.surfire.version>2.22.1</maven.surfire.version>
     <maven.failsafe.version>2.22.1</maven.failsafe.version>
-    <codehaus.gmaven.version>1.8.0</codehaus.gmaven.version>
+    <maven.surfire.version>2.22.1</maven.surfire.version>
     <codehaus.buildhelper.version>3.0.0</codehaus.buildhelper.version>
+    <codehaus.gmaven.version>1.8.0</codehaus.gmaven.version>
   </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-      <version>${spring.boot.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-jdbc</artifactId>
-      <version>${spring.boot.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>${commons.lang3.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-validator</groupId>
-      <artifactId>commons-validator</artifactId>
-      <version>${commons.validator.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>${google.guava.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.vavr</groupId>
-      <artifactId>vavr</artifactId>
-      <version>${vavr.version}</version>
-    </dependency>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+        <version>${spring.boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-jdbc</artifactId>
+        <version>${spring.boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <version>${spring.boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+        <version>${spring.boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger2</artifactId>
+        <version>${swagger.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger-ui</artifactId>
+        <version>${swagger.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons.lang3.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-validator</groupId>
+        <artifactId>commons-validator</artifactId>
+        <version>${commons.validator.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${google.guava.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <scope>provided</scope>
+        <version>${lombok.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.vavr</groupId>
+        <artifactId>vavr</artifactId>
+        <version>${vavr.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.h2database</groupId>
         <artifactId>h2</artifactId>
-        <version>${h2.version}</version>
         <scope>runtime</scope>
+        <version>${h2.version}</version>
       </dependency>
-    <!-- Test Dependencies -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <version>${spring.boot.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.groovy</groupId>
-      <artifactId>groovy</artifactId>
-      <version>${groovy.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.spockframework</groupId>
-      <artifactId>spock-core</artifactId>
-      <version>${spock.version}</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+      <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.2.12</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>${google.gson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fatboyindustrial.gson-javatime-serialisers</groupId>
+        <artifactId>gson-javatime-serialisers</artifactId>
+        <version>${fatboyindustrial.gson.javatime.version}</version>
+      </dependency>
+
+      <!-- Test Dependencies -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+        <version>${spring.boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-test</artifactId>
+        <version>${spring.security.test.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.groovy</groupId>
+        <artifactId>groovy</artifactId>
+        <scope>test</scope>
+        <version>${groovy.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.spockframework</groupId>
+        <artifactId>spock-core</artifactId>
+        <scope>test</scope>
+        <version>${spock.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <pluginManagement>
@@ -121,14 +177,6 @@
           <groupId>org.codehaus.gmavenplus</groupId>
           <artifactId>gmavenplus-plugin</artifactId>
           <version>${codehaus.gmaven.version}</version>
-          <executions>
-            <execution>
-              <goals>
-                <goal>compileTests</goal>
-                <goal>addTestSources</goal>
-              </goals>
-            </execution>
-          </executions>
           <configuration>
             <testSources>
               <testSource>
@@ -139,6 +187,14 @@
               </testSource>
             </testSources>
           </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>compileTests</goal>
+                <goal>addTestSources</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -146,23 +202,18 @@
           <version>${codehaus.buildhelper.version}</version>
           <executions>
             <execution>
-              <id>add-integration-test-source</id>
-              <phase>generate-test-sources</phase>
-              <goals>
-                <goal>add-test-source</goal>
-              </goals>
               <configuration>
                 <sources>
                   <source>src/integration-test/java</source>
                 </sources>
               </configuration>
+              <goals>
+                <goal>add-test-source</goal>
+              </goals>
+              <id>add-integration-test-source</id>
+              <phase>generate-test-sources</phase>
             </execution>
             <execution>
-              <id>add-resource</id>
-              <phase>generate-resources</phase>
-              <goals>
-                <goal>add-resource</goal>
-              </goals>
               <configuration>
                 <resources>
                   <resource>
@@ -171,40 +222,45 @@
                   </resource>
                 </resources>
               </configuration>
+              <goals>
+                <goal>add-resource</goal>
+              </goals>
+              <id>add-resource</id>
+              <phase>generate-resources</phase>
             </execution>
           </executions>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>${maven.surfire.version}</version>
           <configuration>
-            <useFile>false</useFile>
             <includes>
               <include>**/*Spec.java</include>
             </includes>
+            <useFile>false</useFile>
           </configuration>
+          <groupId>org.apache.maven.plugins</groupId>
+          <version>${maven.surfire.version}</version>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>${maven.failsafe.version}</version>
+          <configuration>
+            <includes>
+              <include>**/*IT.java</include>
+            </includes>
+            <testSourceDirectory>src/integration-test/java</testSourceDirectory>
+          </configuration>
           <executions>
             <execution>
-              <id>integration-tests</id>
-              <phase>integration-test</phase>
               <goals>
                 <goal>integration-test</goal>
                 <goal>verify</goal>
               </goals>
+              <id>integration-tests</id>
+              <phase>integration-test</phase>
             </execution>
           </executions>
-          <configuration>
-            <testSourceDirectory>src/integration-test/java</testSourceDirectory>
-            <includes>
-              <include>**/*IT.java</include>
-            </includes>
-          </configuration>
+          <groupId>org.apache.maven.plugins</groupId>
+          <version>${maven.failsafe.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>
