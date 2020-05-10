@@ -13,6 +13,7 @@ together.
 ## Requirements
 
 * Java 11
+* Groovy 2.5 or higher
 * Maven 3.5 or higher
 * Docker (optional)
 * Kubernetes (optional)
@@ -131,6 +132,7 @@ The following list the main frameworks and libraries used to implement this appl
 - [h2](https://www.h2database.com/html/main.html) : Lightweight in-memory relational database.
 - [swagger](https://swagger.io/): Specification for machine-readable interface files for
 describing, producing, consuming, and visualizing RESTful web services 
+- [spock](https://github.com/spockframework/spock): BDD-style testing and specification framework for Java and Groovy.
 
 ## Features
 
