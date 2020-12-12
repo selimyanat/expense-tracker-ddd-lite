@@ -10,6 +10,42 @@ The application represents an expense tracker with a very limited set of feature
 to demonstrate ,given a simplified business problem, how modules shall be implemented and put
 together. 
 
+## Architecture
+
+![Alt text](img/expense-tracker-archi.jpg  "Architecture")
+
+## Features
+
+The application exposes the following APIs, that cab be accessed through swagger at 
+`http://localhost:8080/swagger-ui.html#/`
+
+* Create user
+
+* Add an expense
+
+* Get expenses by user
+
+* Get audit trail
+
+ ![Alt text](img/expense-tracker-swagger.png  "Main Commands")
+ 
+## Technical Environment
+
+Expense tracker is a self contained application based on **Spring Boot** that runs an embedded
+servlet container running by default on port 8080 that expose a **REST API**. 
+
+The following list the main frameworks and libraries used to implement this application:
+
+- [spring boot](https://spring.io/projects/spring-boot): Simple and rapid framework to create
+ simple and web based applications.
+- [lombok](https://projectlombok.org/) : Framework auto generating code for java (getter, setter, ...).
+- [vavr](http://www.vavr.io): Functional library for java.
+- [h2](https://www.h2database.com/html/main.html) : Lightweight in-memory relational database.
+- [swagger](https://swagger.io/): Specification for machine-readable interface files for
+describing, producing, consuming, and visualizing RESTful web services 
+- [spock](https://github.com/spockframework/spock): BDD-style testing and specification framework for Java and Groovy. 
+ 
+
 ## Requirements
 
 * Java 11
@@ -117,34 +153,3 @@ terminal or browser
 ```
 kubectl port-forward svc/expense-tracker-service 8080:8080
 ``` 
-
-## Technical Environment
-
-Expense tracker is a self contained application based on **Spring Boot** that runs an embedded
-servlet container running by default on port 8080 that expose a **REST API**. 
-
-The following list the main frameworks and libraries used to implement this application:
-
-- [spring boot](https://spring.io/projects/spring-boot): Simple and rapid framework to create
- simple and web based applications.
-- [lombok](https://projectlombok.org/) : Framework auto generating code for java (getter, setter, ...).
-- [vavr](http://www.vavr.io): Functional library for java.
-- [h2](https://www.h2database.com/html/main.html) : Lightweight in-memory relational database.
-- [swagger](https://swagger.io/): Specification for machine-readable interface files for
-describing, producing, consuming, and visualizing RESTful web services 
-- [spock](https://github.com/spockframework/spock): BDD-style testing and specification framework for Java and Groovy.
-
-## Features
-
-The application exposes the following APIs, that cab be accessed through swagger at 
-`http://localhost:8080/swagger-ui.html#/`
-
-* Create user
-
-* Add an expense
-
-* Get expenses by user
-
-* Get audit trail
-
- ![Alt text](img/expense-tracker-swagger.png  "Main Commands")
