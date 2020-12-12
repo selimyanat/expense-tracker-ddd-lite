@@ -12,7 +12,7 @@ together.
 
 ## Architecture
 
-![Alt text](img/expense-tracker-archi.jpg  "Architecture")
+![Alt text](img/expense-tracker-archi.png  "Architecture")
 
 ## Features
 
