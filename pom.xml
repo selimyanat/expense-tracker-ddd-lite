@@ -32,7 +32,7 @@
     <google.guava.version>28.0-jre</google.guava.version>
     <commons.lang3.version>3.9</commons.lang3.version>
     <groovy.version>2.5.6</groovy.version>
-    <h2.version>1.4.200</h2.version>
+    <h2.version>2.1.210</h2.version>
     <jackson.databind.version>2.9.8</jackson.databind.version>
     <lombok.version>1.18.8</lombok.version>
     <vavr.version>0.10.2</vavr.version>
